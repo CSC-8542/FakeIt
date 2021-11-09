@@ -1,55 +1,41 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
 
-<h1>Weather forecast</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
-
-@if (forecasts == null)
+@if (persona == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <p>First Name : @persona.FirstName</p>
+    <p>Last Name : @persona.LastName</p>
+    <p>Email : @persona.Email</p>
+    <p>UserName : @persona.UserName</p>
+
+    <button class="btn" @onclick = "GetNewPersona"> Get New Persona </button>
 }
 
 @code {
-    private WeatherForecast[] forecasts;
+    private Persona persona;
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+        persona = await Http.GetFromJsonAsync<Persona>("sample-data/persona.json");
     }
 
-    public class WeatherForecast
+    public class Persona
     {
-        public DateTime Date { get; set; }
+        public string FirstName { get; set; }
 
-        public int TemperatureC { get; set; }
+        public string LastName { get; set; }
 
-        public string Summary { get; set; }
+        public string Email { get; set; }
 
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+        public string UserName { get; set; }
+    }
+    protected void  GetNewPersona()
+    {
+        persona = new Persona { FirstName = "Nick", LastName = "Langan", Email = "nlangan@villanova.edu", UserName = "nlangan" };
     }
 }

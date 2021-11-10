@@ -13,4 +13,16 @@
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Remove="wwwroot\images\personas\randomdude1.jpg" />
+    <Content Remove="wwwroot\images\personas\randomdude2.jpg" />
+    <Content Remove="wwwroot\images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\images\personas\randomdude1.jpg" />
+    <None Include="wwwroot\images\personas\randomdude2.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
 </Project>

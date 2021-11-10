@@ -8,34 +8,41 @@
 }
 else
 {
-    <p>First Name : @persona.FirstName</p>
-    <p>Last Name : @persona.LastName</p>
-    <p>Email : @persona.Email</p>
-    <p>UserName : @persona.UserName</p>
 
-    <button class="btn" @onclick = "GetNewPersona"> Get New Persona </button>
-}
+<div class="card">
+    <img src="images/personas/@persona.imageURL" alt="Avatar">
+    <div class="container">
+        <p>First Name : @persona.FirstName</p>
+        <p>Last Name : @persona.LastName</p>
+        <p>Email : @persona.Email</p>
+        <p>UserName : @persona.UserName</p>
+    </div>
+</div>
+        <button class="btn" @onclick="GetNewPersona"> Get New Persona </button>
+        }
 
-@code {
-    private Persona persona;
+        @code {
+            private Persona persona;
 
-    protected override async Task OnInitializedAsync()
-    {
-        persona = await Http.GetFromJsonAsync<Persona>("sample-data/persona.json");
-    }
+            protected override async Task OnInitializedAsync()
+            {
+                persona = await Http.GetFromJsonAsync<Persona>("sample-data/persona.json");
+            }
 
-    public class Persona
-    {
-        public string FirstName { get; set; }
+            public class Persona
+            {
+                public string FirstName { get; set; }
 
-        public string LastName { get; set; }
+                public string LastName { get; set; }
 
-        public string Email { get; set; }
+                public string Email { get; set; }
 
-        public string UserName { get; set; }
-    }
-    protected void  GetNewPersona()
-    {
-        persona = new Persona { FirstName = "Nick", LastName = "Langan", Email = "nlangan@villanova.edu", UserName = "nlangan" };
-    }
-}
+                public string UserName { get; set; }
+
+                public string imageURL { get; set; }
+            }
+            protected void GetNewPersona()
+            {
+                persona = new Persona { FirstName = "Nick", LastName = "Langan", Email = "nlangan@villanova.edu", UserName = "nlangan", imageURL = "randomdude2.jpg"};
+            }
+        }

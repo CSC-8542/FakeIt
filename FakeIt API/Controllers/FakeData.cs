@@ -1,4 +1,5 @@
 ﻿using FakeIt_API.Entities;
+using FakeIt_API.Services.API_Communicator;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -12,25 +13,18 @@ namespace FakeIt_API.Controllers
     [Route("[controller]")]
     public class FakeData : ControllerBase
     {
-        public FakeData()
+        private readonly IDataAccessor _dataAccessor;
+
+        public FakeData( IDataAccessor dataAccessor)
         {
+            _dataAccessor = dataAccessor;
         }
 
         [HttpGet]
-        public List<Persona> Get(int quantity =1)
+        public List<Persona> Get([FromQuery] Query query)
         {
-            return GetPersona(quantity);
+            return _dataAccessor.GetPersonas(query);
         }
 
-        private List<Persona> GetPersona(int quantity)
-        {
-            List<Persona> persona = new();
-
-            persona.Add(new Persona { Email = "nick@villanova.edu", FirstName = "Nick", LastName = "Langan", UserName = "nlangan",
-                ImageURL = "https://media.istockphoto.com/photos/home-office-picture-id1193214720" }
-            );
-
-            return persona;
-        }
     }
 }

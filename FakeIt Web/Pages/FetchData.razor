@@ -27,7 +27,6 @@ else
     protected override async Task OnInitializedAsync()
     {
         persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
-        var x = 0;
     }
 
             public class Persona

@@ -1,3 +1,4 @@
+using FakeIt_API.Services.API_Communicator;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -39,6 +40,7 @@ namespace FakeIt_API
                     .AllowAnyHeader()
                     .AllowAnyMethod());
             });
+            services.AddScoped<IDataAccessor, FakeItDataAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

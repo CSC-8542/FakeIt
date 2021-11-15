@@ -32,6 +32,13 @@ namespace FakeIt_API
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "FakeIt_API", Version = "v1" });
             });
+            services.AddCors(policy =>
+            {
+                policy.AddPolicy("CorsPolicy", opt => opt
+                    .AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,10 +52,9 @@ namespace FakeIt_API
             }
 
             app.UseHttpsRedirection();
-
+            app.UseCors("CorsPolicy");
             app.UseRouting();
-
-            app.UseAuthorization();
+ 
 
             app.UseEndpoints(endpoints =>
             {

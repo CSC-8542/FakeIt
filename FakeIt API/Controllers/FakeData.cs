@@ -17,13 +17,12 @@ namespace FakeIt_API.Controllers
         }
 
         [HttpGet]
-        public List<Persona> Get()
+        public List<Persona> Get(int quantity =1)
         {
-
-            return GetPersona();
+            return GetPersona(quantity);
         }
 
-        private List<Persona> GetPersona()
+        private List<Persona> GetPersona(int quantity)
         {
             List<Persona> persona = new();
 

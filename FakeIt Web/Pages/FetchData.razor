@@ -8,26 +8,27 @@
 }
 else
 {
-
 <div class="card">
-    <img src="images/personas/@persona.imageURL" alt="Avatar">
+   
     <div class="container">
-        <p>First Name : @persona.FirstName</p>
-        <p>Last Name : @persona.LastName</p>
-        <p>Email : @persona.Email</p>
-        <p>UserName : @persona.UserName</p>
+         <img src=@persona[0].ImageURL alt="Avatar">
+        <p>First Name : @persona[0].FirstName</p>
+        <p>Last Name : @persona[0].LastName</p>
+        <p>Email : @persona[0].Email</p>
+        <p>UserName : @persona[0].UserName</p>
     </div>
 </div>
         <button class="btn" @onclick="GetNewPersona"> Get New Persona </button>
         }
 
-        @code {
-            private Persona persona;
+@code {
+    private List<Persona> persona;
 
-            protected override async Task OnInitializedAsync()
-            {
-                persona = await Http.GetFromJsonAsync<Persona>("sample-data/persona.json");
-            }
+    protected override async Task OnInitializedAsync()
+    {
+        persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+        var x = 0;
+    }
 
             public class Persona
             {
@@ -39,10 +40,10 @@ else
 
                 public string UserName { get; set; }
 
-                public string imageURL { get; set; }
+                public string ImageURL { get; set; }
             }
-            protected void GetNewPersona()
+            protected async void GetNewPersona()
             {
-                persona = new Persona { FirstName = "Nick", LastName = "Langan", Email = "nlangan@villanova.edu", UserName = "nlangan", imageURL = "randomdude2.jpg"};
+                persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
             }
         }

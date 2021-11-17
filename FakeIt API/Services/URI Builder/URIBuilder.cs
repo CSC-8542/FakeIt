@@ -6,6 +6,7 @@ namespace FakeIt_API.Services.URIBuilder
     public class URIBuilder : IURIBuilder
     {
         private const string baseURIOfFakerAPI = "https://fakerapi.it/api/v1/";
+        private const string fakerAPIRequestType = "persons?"; 
         private const string quantityURI = "?_quantity";
         private const string genderURI = "?_gender";
         private const string birthdayStartURI = "?_birthday_start";
@@ -27,7 +28,7 @@ namespace FakeIt_API.Services.URIBuilder
 
         private string MeshURI(string baseURI, Query query)
         {
-            String builtURI = baseURI + AssessQuantity(query) + AddAmpresand() + AssessGender(query) + AddAmpresand() + AssessBirthdayStart(query);
+            String builtURI = baseURI + fakerAPIRequestType + AssessQuantity(query) + AddAmpresand() + AssessGender(query) + AddAmpresand() + AssessBirthdayStart(query);
 
             return builtURI;
         }

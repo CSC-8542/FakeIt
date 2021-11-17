@@ -1,16 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using FakeIt_API.Entities;
 
 namespace FakeIt_API.Services.URIBuilder
 {
     public class URIBuilder : IURIBuilder
     {
-        private const string baseURIOfFakerAPI = "https://fakerapi.it/api/v1/";
-        private const string fakerAPIRequestType = "persons?"; 
-        private const string quantityURI = "?_quantity";
-        private const string genderURI = "?_gender";
-        private const string birthdayStartURI = "?_birthday_start";
-        private Random gen = new Random();
+        private const string BaseURIOfFakerAPI = "https://fakerapi.it/api/v1/";
+        private const string FakerAPIRequestType = "persons?";
+        private const string QuantityURI = "?_quantity";
+        private const string GenderURI = "?_gender";
+
 
 
         public URIBuilder()
@@ -19,7 +19,7 @@ namespace FakeIt_API.Services.URIBuilder
 
         public string GetURI(Query query)
         {
-            String baseURI = baseURIOfFakerAPI;
+            String baseURI = BaseURIOfFakerAPI + FakerAPIRequestType;
 
             return MeshURI(baseURI, query);
 
@@ -28,14 +28,50 @@ namespace FakeIt_API.Services.URIBuilder
 
         private string MeshURI(string baseURI, Query query)
         {
-            String builtURI = baseURI + fakerAPIRequestType + AssessQuantity(query) + AddAmpresand() + AssessGender(query) + AddAmpresand() + AssessBirthdayStart(query);
+            List<string> queryParams = GenerateQueryParams(query);
 
-            return builtURI;
+            foreach (string param in queryParams)
+            {
+                AddToURI(baseURI, param);
+
+            }
+
+
+
+
+
+            return baseURI;
         }
 
-        private string AssessBirthdayStart(Query query)
+        private void AddToURI(string baseURI, string param)
         {
-            return birthdayStartURI + "=" + RandomDay();
+            if (param.Contains("gender"))
+            {
+                baseURI = baseURI + GenderURI + '=' + param;
+            }
+
+            if (param.Contains("quantity"))
+            {
+                baseURI = baseURI + QuantityURI + '=' + param;
+            }
+        }
+
+        private List<string> GenerateQueryParams(Query query)
+        {
+            return AssessQuery(query);
+        }
+
+        private List<string> AssessQuery(Query query)
+        {
+            List<string> propertyList = new List<string>();
+            if (query != null)
+            {
+                foreach (var prop in query.GetType().GetProperties())
+                {
+                    propertyList.Add(prop.Name);
+                }
+            }
+            return propertyList;
         }
 
         private static char AddAmpresand()
@@ -43,28 +79,9 @@ namespace FakeIt_API.Services.URIBuilder
             return '&';
         }
 
-        private string AssessGender(Query query)
-        {
-            return genderURI + "=" + "male";
-        }
-
-        private string AssessQuantity(Query query)
-        {
-
-            return quantityURI + "=" + query.Quantity;
-        }
 
 
-        DateTime RandomDay()
-        {
-            DateTime start = GetStart();
-            int range = (DateTime.Today - start).Days;
-            return start.AddDays(gen.Next(range));
 
-            static DateTime GetStart()
-            {
-                return new DateTime(1940, 1, 1);
-            }
-        }
+
     }
 }

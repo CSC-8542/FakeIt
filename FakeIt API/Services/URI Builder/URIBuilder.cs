@@ -1,6 +1,6 @@
-﻿using System;
+﻿using FakeIt_API.Entities;
+using System;
 using System.Collections.Generic;
-using FakeIt_API.Entities;
 
 namespace FakeIt_API.Services.URIBuilder
 {
@@ -17,7 +17,7 @@ namespace FakeIt_API.Services.URIBuilder
         {
         }
 
-        public string GetURI(Query query)
+        public string GetPersonaUri(PersonaQuery query)
         {
             String baseURI = BaseURIOfFakerAPI + FakerAPIRequestType;
 
@@ -26,7 +26,7 @@ namespace FakeIt_API.Services.URIBuilder
 
         }
 
-        private string MeshURI(string baseURI, Query query)
+        private string MeshURI(string baseURI, PersonaQuery query)
         {
             List<string> queryParams = GenerateQueryParams(query);
 
@@ -56,12 +56,12 @@ namespace FakeIt_API.Services.URIBuilder
             }
         }
 
-        private List<string> GenerateQueryParams(Query query)
+        private List<string> GenerateQueryParams(PersonaQuery query)
         {
             return AssessQuery(query);
         }
 
-        private List<string> AssessQuery(Query query)
+        private List<string> AssessQuery(PersonaQuery query)
         {
             List<string> propertyList = new List<string>();
             if (query != null)

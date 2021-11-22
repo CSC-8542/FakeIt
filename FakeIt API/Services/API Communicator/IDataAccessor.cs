@@ -5,6 +5,6 @@ namespace FakeIt_API.Services.API_Communicator
 {
     public interface IDataAccessor
     {
-        public List<Persona> GetPersonas(Query query);
+        public List<Persona> GetPersonas(PersonaQuery query);
     }
 }

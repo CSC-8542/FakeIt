@@ -1,10 +1,10 @@
-﻿using System;
-using FakeIt_API.Entities;
+﻿using FakeIt_API.Entities;
+using System;
 
 namespace FakeIt_API.Services.URIBuilder
 {
     public interface IURIBuilder
     {
-        public String GetURI(Query query);
+        public String GetPersonaUri(PersonaQuery query);
     }
 }

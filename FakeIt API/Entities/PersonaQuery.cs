@@ -2,9 +2,9 @@
 
 namespace FakeIt_API.Entities
 {
-    public class Query
+    public class PersonaQuery
     {
-        [FromQuery(Name ="quantity")]
+        [FromQuery(Name = "quantity")]
         public int Quantity { get; set; } = 1;
     }
 }

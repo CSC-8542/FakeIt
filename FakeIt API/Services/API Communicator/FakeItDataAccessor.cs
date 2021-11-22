@@ -10,7 +10,7 @@ namespace FakeIt_API.Services.API_Communicator
         public FakeItDataAccessor()
         {
         }
-        public List<Persona> GetPersonas([FromQuery] Query query)
+        public List<Persona> GetPersonas([FromQuery] PersonaQuery query)
         {
             return FakePersonas.GetPersonas();
         }

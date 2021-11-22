@@ -1,5 +1,6 @@
 using AspNetCoreRateLimit;
 using FakeIt_API.Services.API_Communicator;
+using FakeIt_API.Services.URIBuilder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -42,6 +43,7 @@ namespace FakeIt_API
                     .AllowAnyMethod());
             });
             services.AddScoped<IDataAccessor, FakeItDataAccessor>();
+            services.AddScoped<IURIBuilder, FakerUriBuilder>();
             // configuration (resolvers, counter key builders)
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
         }

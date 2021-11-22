@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace FakeIt_API.Services.URIBuilder
 {
-    public class URIBuilder : IURIBuilder
+    public class FakerUriBuilder : IURIBuilder
     {
         private const string BaseURIOfFakerAPI = "https://fakerapi.it/api/v1/";
         private const string FakerAPIRequestType = "persons?";
@@ -13,7 +13,7 @@ namespace FakeIt_API.Services.URIBuilder
 
 
 
-        public URIBuilder()
+        public FakerUriBuilder()
         {
         }
 

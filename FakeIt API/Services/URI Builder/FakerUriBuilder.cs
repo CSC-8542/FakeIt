@@ -7,11 +7,14 @@ namespace FakeIt_API.Services.URIBuilder
     public class FakerUriBuilder : IURIBuilder
     {
         private const string BaseURIOfFakerAPI = "https://fakerapi.it/api/v1/";
-        private const string FakerAPIRequestType = "persons?";
+        private const string FakerAPIRequestType = "persons";
         private const string QuantityURI = "?_quantity";
         private const string GenderURI = "?_gender";
 
 
+        Dictionary<String, String> queryParamDictionary = new() { { "Quantity", "_quantity" }, {"Gender", "_gender"} };
+
+       
 
         public FakerUriBuilder()
         {
@@ -28,11 +31,18 @@ namespace FakeIt_API.Services.URIBuilder
 
         private string MeshURI(string baseURI, PersonaQuery query)
         {
-            List<string> queryParams = GenerateQueryParams(query);
+            Dictionary<string, string> queryParams = GenerateQueryParams(query);
 
-            foreach (string param in queryParams)
+            //ToDo: Hashmap, list of possible FakeIt parameters
+
+          
+
+
+            foreach (string param in queryParams.Keys)
             {
-                AddToURI(baseURI, param);
+               
+
+                AddToURI(baseURI, queryParamDictionary.GetValueOrDefault(param), queryParams.GetValueOrDefault(param));
 
             }
 
@@ -43,41 +53,37 @@ namespace FakeIt_API.Services.URIBuilder
             return baseURI;
         }
 
-        private void AddToURI(string baseURI, string param)
+        private void AddToURI(string baseURI, string param, String paramValue)
         {
-            if (param.Contains("gender"))
-            {
-                baseURI = baseURI + GenderURI + '=' + param;
-            }
+                        
+            baseURI = baseURI + "?" + param + "=" + paramValue;
+         }
+          
+        
 
-            if (param.Contains("quantity"))
-            {
-                baseURI = baseURI + QuantityURI + '=' + param;
-            }
-        }
-
-        private List<string> GenerateQueryParams(PersonaQuery query)
+        private Dictionary<string, string> GenerateQueryParams(PersonaQuery query)
         {
             return AssessQuery(query);
         }
 
-        private List<string> AssessQuery(PersonaQuery query)
+        private Dictionary<string, string> AssessQuery(PersonaQuery query)
         {
-            List<string> propertyList = new List<string>();
+            Dictionary<string, string> queryMap = new();
             if (query != null)
             {
                 foreach (var prop in query.GetType().GetProperties())
                 {
-                    propertyList.Add(prop.Name);
+                    
+                    queryMap.Add(prop.Name, prop.GetValue(query).ToString());
                 }
             }
-            return propertyList;
+            return queryMap;
         }
 
         private static char AddAmpresand()
         {
             return '&';
-        }
+        }       
 
 
 

@@ -73,8 +73,13 @@ namespace FakeIt_API.Services.URIBuilder
             {
                 foreach (var prop in query.GetType().GetProperties())
                 {
-                    
-                    queryMap.Add(prop.Name, prop.GetValue(query).ToString());
+
+                    var type = prop.PropertyType;
+                    object defaultValue = type.IsValueType ? Activator.CreateInstance(type) : null;
+                    if (prop.GetValue(query) != defaultValue)
+                    {
+                        queryMap.Add(prop.Name, prop.GetValue(query).ToString());
+                    }
                 }
             }
             return queryMap;

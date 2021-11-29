@@ -7,14 +7,11 @@ namespace FakeIt_API.Services.URIBuilder
     public class FakerUriBuilder : IURIBuilder
     {
         private const string BaseURIOfFakerAPI = "https://fakerapi.it/api/v1/";
-        private const string FakerAPIRequestType = "persons";
-        private const string QuantityURI = "?_quantity";
-        private const string GenderURI = "?_gender";
+        private const string FakerAPIRequestType = "users";
+
+        Dictionary<String, String> queryParamDictionary = new() { { "Quantity", "_quantity" }, { "Gender", "_gender" } };
 
 
-        Dictionary<String, String> queryParamDictionary = new() { { "Quantity", "_quantity" }, {"Gender", "_gender"} };
-
-       
 
         public FakerUriBuilder()
         {
@@ -35,12 +32,12 @@ namespace FakeIt_API.Services.URIBuilder
 
             //ToDo: Hashmap, list of possible FakeIt parameters
 
-          
+
 
 
             foreach (string param in queryParams.Keys)
             {
-               
+
 
                 AddToURI(baseURI, queryParamDictionary.GetValueOrDefault(param), queryParams.GetValueOrDefault(param));
 
@@ -55,11 +52,11 @@ namespace FakeIt_API.Services.URIBuilder
 
         private void AddToURI(string baseURI, string param, String paramValue)
         {
-                        
+
             baseURI = baseURI + "?" + param + "=" + paramValue;
-         }
-          
-        
+        }
+
+
 
         private Dictionary<string, string> GenerateQueryParams(PersonaQuery query)
         {
@@ -84,15 +81,6 @@ namespace FakeIt_API.Services.URIBuilder
             }
             return queryMap;
         }
-
-        private static char AddAmpresand()
-        {
-            return '&';
-        }       
-
-
-
-
 
     }
 }

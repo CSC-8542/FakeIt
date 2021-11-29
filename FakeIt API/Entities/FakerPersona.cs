@@ -1,48 +1,25 @@
 ﻿
-
-
-using System;
-using System.Collections.Generic;
-
 namespace FakeIt_API.Entities
 {
-    public class FakerPersona
+    public class Rootobject
     {
-        // Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse); 
-        public class Address
-        {
-            public string street { get; set; }
-            public string streetName { get; set; }
-            public string buildingNumber { get; set; }
-            public string city { get; set; }
-            public string zipcode { get; set; }
-            public string country { get; set; }
-            public string county_code { get; set; }
-            public double latitude { get; set; }
-            public double longitude { get; set; }
-        }
+        public string Status { get; set; }
+        public int Code { get; set; }
+        public int Total { get; set; }
+        public Datum[] Data { get; set; }
+    }
 
-        public class Datum
-        {
-            public string firstname { get; set; }
-            public string lastname { get; set; }
-            public string email { get; set; }
-            public string phone { get; set; }
-            public string birthday { get; set; }
-            public string gender { get; set; }
-            public Address address { get; set; }
-            public string website { get; set; }
-            public string image { get; set; }
-        }
-
-        public class Root
-        {
-            public string status { get; set; }
-            public int code { get; set; }
-            public int total { get; set; }
-            public List<Datum> data { get; set; }
-        }
-
-
+    public class Datum
+    {
+        public string Uuid { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
+        public string Email { get; set; }
+        public string Ip { get; set; }
+        public string MacAddress { get; set; }
+        public string Website { get; set; }
+        public string Image { get; set; }
     }
 }

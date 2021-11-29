@@ -1,5 +1,7 @@
 using AspNetCoreRateLimit;
+using FakeIt_API.Profiles;
 using FakeIt_API.Services.API_Communicator;
+using FakeIt_API.Services.ResponseMapper;
 using FakeIt_API.Services.URIBuilder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,6 +49,8 @@ namespace FakeIt_API
             // configuration (resolvers, counter key builders)
             services.AddSingleton<IRateLimitConfiguration, RateLimitConfiguration>();
             services.AddHttpClient();
+            services.AddAutoMapper(typeof(FakerProfile));
+            services.AddScoped<IFakerResponseMapper, FakerResponseMapper>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

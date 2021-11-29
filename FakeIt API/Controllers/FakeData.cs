@@ -2,6 +2,7 @@
 using FakeIt_API.Services.API_Communicator;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FakeIt_API.Controllers
 {
@@ -17,9 +18,14 @@ namespace FakeIt_API.Controllers
         }
 
         [HttpGet]
-        public List<Persona> Get([FromQuery] PersonaQuery query)
+        public async Task<ActionResult<List<Persona>>> Get([FromQuery] PersonaQuery query)
         {
-            return _dataAccessor.GetPersonas(query);
+            var data = await _dataAccessor.GetPersonasAsync(query);
+            if (data is null)
+            {
+                return NotFound();
+            }
+            return data;
         }
 
     }

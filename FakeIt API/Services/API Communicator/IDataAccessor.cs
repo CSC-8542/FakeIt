@@ -6,6 +6,6 @@ namespace FakeIt_API.Services.API_Communicator
 {
     public interface IDataAccessor
     {
-        public Task<List<Persona>> GetPersonas(PersonaQuery query);
+        public Task<List<Persona>> GetPersonasAsync(PersonaQuery query);
     }
 }

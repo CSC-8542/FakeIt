@@ -2,50 +2,49 @@
 
 
 using FakeIt_API.Entities;
-using FakeIt_API.Static_Data;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
+using FakeIt_API.Services.ResponseMapper;
 using FakeIt_API.Services.URIBuilder;
-using System.Threading.Tasks;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+using System.Collections.Generic;
 using System.Net.Http;
-//using ServiceStack;
-using System.Net;
-using static FakeIt_API.Entities.FakerPersona;
+using System.Threading.Tasks;
 
 namespace FakeIt_API.Services.API_Communicator
 {
     public class FakeItDataAccessor : IDataAccessor
     {
+        private readonly IURIBuilder _builder;
+        private readonly IHttpClientFactory _client;
+        private readonly IFakerResponseMapper _mapper;
 
-        static string _address = "https://fakerapi.it/api/v1/persons?_quantity=1&_gender=male&_birthday_start=2005-01-01";
-        private readonly IURIBuilder builder;
-        private readonly IHttpClientFactory client;
-
-        public FakeItDataAccessor(IURIBuilder _builder, IHttpClientFactory _client)
+        public FakeItDataAccessor(IURIBuilder builder, IHttpClientFactory client, IFakerResponseMapper mapper)
         {
-            builder = _builder;
-            client = _client;
+            _builder = builder;
+            _client = client;
+            _mapper = mapper;
 
         }
 
         [System.Obsolete]
         public async Task<List<Persona>> GetPersonasAsync(PersonaQuery query)
         {
-            var url = builder.GetPersonaUri(query);
+            var url = _builder.GetPersonaUri(query);
             //Root fakerData = new Root();
-            Root fakerData = new Root();
-            var httpClient = client.CreateClient();
+            Rootobject fakerData = new Rootobject();
+            var httpClient = _client.CreateClient();
             var response = await httpClient.GetAsync(url);
 
-            string apiResponse = await response.Content.ReadAsStringAsync();
-            fakerData = JsonConvert.DeserializeObject<Root>(apiResponse);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string apiResponse = await response.Content.ReadAsStringAsync();
+                fakerData = JsonConvert.DeserializeObject<Rootobject>(apiResponse);
+                return _mapper.GetMappedPersona(fakerData.Data);
+            }
 
 
-            return fakerData;
+            return null;
+
         }
     }
 }

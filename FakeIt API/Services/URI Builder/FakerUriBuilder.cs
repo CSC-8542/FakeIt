@@ -49,7 +49,8 @@ namespace FakeIt_API.Services.URIBuilder
 
                     var type = prop.PropertyType;
                     object defaultValue = type.IsValueType ? Activator.CreateInstance(type) : null;
-                    if (prop.GetValue(query) != defaultValue)
+                    var queryValue = prop.GetValue(query);
+                    if (!queryValue.Equals(defaultValue))
                     {
                         queryMap.Add(prop.Name, prop.GetValue(query).ToString());
                     }

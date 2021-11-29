@@ -1,10 +1,11 @@
 ﻿using FakeIt_API.Entities;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FakeIt_API.Services.API_Communicator
 {
     public interface IDataAccessor
     {
-        public List<Persona> GetPersonas(PersonaQuery query);
+        public Task<List<Persona>> GetPersonas(PersonaQuery query);
     }
 }

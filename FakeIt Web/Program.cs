@@ -13,7 +13,7 @@ namespace FakeIt_Web
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("#app");
 
-            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:5001/") });
+            builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://fakeit-api.azurewebsites.net/") });
 
             await builder.Build().RunAsync();
         }

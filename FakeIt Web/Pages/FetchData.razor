@@ -1,5 +1,7 @@
 ﻿@page "/fetchdata"
 @inject HttpClient Http
+@inject IJSRuntime JSRuntime
+
 
 
 @if (persona == null)
@@ -8,41 +10,56 @@
 }
 else
 {
+    <div class="card">
 
-<div class="card">
-    <img src="images/personas/@persona.imageURL" alt="Avatar">
-    <div class="container">
-        <p>First Name : @persona.FirstName</p>
-        <p>Last Name : @persona.LastName</p>
-        <p>Email : @persona.Email</p>
-        <p>UserName : @persona.UserName</p>
+        <div class="container">
+            <img src=@persona[0].ImageURL alt="Avatar">
+            <p>First Name : @persona[0].FirstName</p>
+            <p>Last Name : @persona[0].LastName</p>
+            <p>Email : @persona[0].Email</p>
+            <p>UserName : @persona[0].UserName</p>
+        </div>
     </div>
-</div>
-        <button class="btn" @onclick="GetNewPersona"> Get New Persona </button>
-        }
+    
+    <button type="button" class="btn btn-primary" @onclick="CopyTextToClipboard">Copy Persona To Clipboard</button>
+    <button class="btn" @onclick="GetNewPersona"> Get New Persona </button>
+}
 
-        @code {
-            private Persona persona;
 
-            protected override async Task OnInitializedAsync()
-            {
-                persona = await Http.GetFromJsonAsync<Persona>("sample-data/persona.json");
-            }
 
-            public class Persona
-            {
-                public string FirstName { get; set; }
+@code {
+    private List<Persona> persona;
 
-                public string LastName { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+    }
 
-                public string Email { get; set; }
+    public class Persona
+    {
+        public string FirstName { get; set; }
 
-                public string UserName { get; set; }
+        public string LastName { get; set; }
 
-                public string imageURL { get; set; }
-            }
-            protected void GetNewPersona()
-            {
-                persona = new Persona { FirstName = "Nick", LastName = "Langan", Email = "nlangan@villanova.edu", UserName = "nlangan", imageURL = "randomdude2.jpg"};
-            }
-        }
+        public string Email { get; set; }
+
+        public string UserName { get; set; }
+
+        public string ImageURL { get; set; }
+
+
+    }
+
+    //Copy to cliboard method used from:  https://chrissainty.com/copy-to-clipboard-in-blazor/
+    
+    private async Task CopyTextToClipboard()
+    {
+        await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", @persona[0].Email);
+    }
+
+    protected async void GetNewPersona()
+    {
+        persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+    }
+
+}

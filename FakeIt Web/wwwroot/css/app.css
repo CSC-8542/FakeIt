@@ -1,36 +1,79 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
-html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+html, body, h2 {
+    font-family: "Helvetica";
+    text-align: center;
+    background-image: linear-gradient(to bottom right, blue, aqua);
+    background-size: cover;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+#app {
+    background-image: linear-gradient(to bottom right, blue, aqua);
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+h1 {
+    font-family: "Helvetica";
+    text-shadow: 2px 2px black;
+    color: white;
+}
+
+.loading-section {
+    font-family: "Helvetica";
+    text-shadow: 1px 1px black;
+    color: white;
 }
 
 a, .btn-link {
-    color: #0366d6;
+    color: purple;
 }
 
 .card {
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    transition: 0.3s;
-    width: 40%;
+    box-shadow: 0 8px 8px 0 rgba(72, 0, 55, .5);
+    transition: 0.5s;
+    width: 50%;
     border-radius: 5px;
+    font-family: "Helvetica";
+    align-content:center;
+    align-items:center;
+    background:rgba(0, 0, 0, .5);
+    margin: 8px;
+    left:24%;
 }
 
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .7);
 }
 
 img {
     border-radius: 5px 5px 0 0;
+    width: 90px;
+    height: 90px;
+    align-content:center;
+    margin-bottom: 10px;
 }
 
 .container {
+    margin-top: 15px;
     padding: 2px 16px;
+    justify-content: flex-end;
 }
 
-.btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+.btn {
+    margin-top: 12px;
+    text-shadow: 1px 1px black;
+    color: white;
+    background-image:linear-gradient(to bottom left, mediumslateblue, mediumpurple);
+}
+
+.btn:hover{
+    text-shadow: 1px 1px black;
+    color:white;
+    background-image:linear-gradient(to bottom left, darkslateblue, rebeccapurple);
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .7);
 }
 
 .content {
@@ -50,7 +93,7 @@ img {
 }
 
 #blazor-error-ui {
-    background: lightyellow;
+    background: purple;
     bottom: 0;
     box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
     display: none;

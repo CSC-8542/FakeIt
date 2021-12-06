@@ -4,23 +4,44 @@
 
 
 
-@if (persona == null)
+@if (persona == null && isRateLimit == false && isError == false)
 {
     <p><em>Loading...</em></p>
 }
+else if (isRateLimit)
+{
+
+
+
+    <div class="container" style="color:red">
+
+        <p>Persona generation limit reached.  Unable to generate more than 2 personas in 15 second period.</p>
+    </div>
+
+}
+else if (isError)
+{
+
+    <div class="container">
+
+        <p>Something went wrong!  Fake persona unable to be generated.</p>
+    </div>
+
+}
+
 else
 {
     <div class="card">
 
         <div class="container">
-            <img src=@persona[0].ImageURL alt="Avatar">
+            <img src=@persona[0].ImageURL alt="Avatar" >
             <p>First Name : @persona[0].FirstName</p>
             <p>Last Name : @persona[0].LastName</p>
             <p>Email : @persona[0].Email</p>
             <p>UserName : @persona[0].UserName</p>
         </div>
     </div>
-    
+
     <button type="button" class="btn btn-primary" @onclick="CopyTextToClipboard">Copy Persona To Clipboard</button>
     <button class="btn" @onclick="GetNewPersona"> Get New Persona </button>
 }
@@ -29,10 +50,35 @@ else
 
 @code {
     private List<Persona> persona;
+    private bool isRateLimit;
+    private bool isError;
 
     protected override async Task OnInitializedAsync()
     {
-        persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+
+        try
+        {
+            persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+            
+        }
+
+        catch (HttpRequestException e)
+        {
+            if (e.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+            {
+
+                isRateLimit = true;
+
+
+            }
+
+        }
+
+        catch (Exception e)
+        {
+
+            isError = true;
+        }
     }
 
     public class Persona
@@ -51,7 +97,7 @@ else
     }
 
     //Copy to cliboard method used from:  https://chrissainty.com/copy-to-clipboard-in-blazor/
-    
+
     private async Task CopyTextToClipboard()
     {
         await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", @persona[0].Email);
@@ -59,7 +105,32 @@ else
 
     protected async void GetNewPersona()
     {
-        persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+
+        try
+        {
+            persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+        }
+        catch (HttpRequestException e)
+        {
+            if (e.StatusCode == System.Net.HttpStatusCode.TooManyRequests)
+            {
+
+                isRateLimit = true;
+
+
+            }
+
+        }
+
+        catch (Exception e)
+        {
+
+            isError = true;
+        }
+
+
     }
+
+
 
 }

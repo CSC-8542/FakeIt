@@ -48,7 +48,7 @@ a, .btn-link {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, .7);
 }
 
-img {
+.img-other {
     border-radius: 5px 5px 0 0;
     width: 90px;
     height: 90px;
@@ -110,3 +110,4 @@ img {
         right: 0.75rem;
         top: 0.5rem;
     }
+

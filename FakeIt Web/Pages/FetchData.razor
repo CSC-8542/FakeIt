@@ -34,7 +34,7 @@ else
     <div class="card">
 
         <div class="container">
-            <img src=@persona[0].ImageURL alt="Avatar" >
+            <img src=@persona[0].ImageURL alt="Avatar">
             <p>First Name : @persona[0].FirstName</p>
             <p>Last Name : @persona[0].LastName</p>
             <p>Email : @persona[0].Email</p>
@@ -43,7 +43,7 @@ else
     </div>
 
     <button type="button" class="btn btn-primary" @onclick="CopyTextToClipboard">Copy Persona To Clipboard</button>
-    <button class="btn" @onclick="GetNewPersona"> Get New Persona </button>
+    <button class="btn" @onclick="@(async ()=> await GetNewPersona())"> Get New Persona </button>
 }
 
 
@@ -59,7 +59,7 @@ else
         try
         {
             persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
-            
+
         }
 
         catch (HttpRequestException e)
@@ -103,12 +103,18 @@ else
         await JSRuntime.InvokeVoidAsync("clipboardCopy.copyText", @persona[0].Email);
     }
 
-    protected async void GetNewPersona()
+    protected async Task GetNewPersona()
     {
 
         try
         {
+
+            
             persona = await Http.GetFromJsonAsync<List<Persona>>("fakedata");
+
+         
+
+
         }
         catch (HttpRequestException e)
         {

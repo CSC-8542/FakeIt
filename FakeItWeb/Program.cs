@@ -4,7 +4,7 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace FakeIt_Web
+namespace FakeItWeb
 {
     public class Program
     {
